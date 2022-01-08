@@ -33,17 +33,16 @@ export default function Home(searchData) {
      window.ethereum.on('accountsChanged', function (accounts) {
       // Time to reload your interface with accounts[0]!
       // console.log(accounts[0])
-      //return accounts[0]
+      return accounts[0]
     });
     setAcc(account);
-
 
     return account
   }
 
 
   // const [searchState, setSearch] = useGlobalState("search");
-  console.log(searchData)
+  // console.log(searchData)
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
   useEffect(() => {
@@ -81,7 +80,7 @@ export default function Home(searchData) {
 
     const finalItem = items.filter( i => Object.keys(i).length > 0 )
 
-    console.log(finalItem)
+    // console.log(finalItem)
     setNfts(finalItem)
     setLoadingState('loaded') 
   }
@@ -105,7 +104,7 @@ export default function Home(searchData) {
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
   return (
     <div className="contents">
-      <div className="px-4 main-container" style={{ maxWidth: '1600px', marginTop: '50px' }}>
+      <div className="px-4 main-container" style={{ marginTop: '50px' }}>
         {/* <div> { window.searchText.value } </div> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 sample">
           {

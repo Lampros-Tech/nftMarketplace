@@ -3,8 +3,10 @@ import '../styles/appstyle.css'
 import Link from 'next/link'
 import "next/image"
 import { useState } from 'react'
-import Home from '.'
-// import { createGlobalState } from 'react-hooks-global-state';
+import HomeLogo from "../public/Images/HomeTest.js"
+import Add from "../public/Images/add.js"
+import Collection from "../public/Images/collection.js"
+import Transactions from "../public/Images/transactions.js"
 
 
 function Marketplace({ Component, pageProps }) {
@@ -24,10 +26,14 @@ function Marketplace({ Component, pageProps }) {
     });
     setAcc(account);
   }
+
+  const style = {
+
+  }
   
   const [searchState, setSearch] = useState("")
   
-  console.log(searchState)
+  //console.log(searchState)
 
   onInit()
   return (
@@ -44,27 +50,45 @@ function Marketplace({ Component, pageProps }) {
             href="/:id"
             render={props => { <Home {...props} searchData = {searchState} /> }}
           > */}
-          <Link
-            href="/"
-          >
-            <a className="nav-btn">
-              Home
+          <Link href="/">
+            <a className="nav-btn" style={ {display:'flex'} }>
+              <div className='nav-btn-btn'>
+                Home
+              </div>
+              <div className='nav-small-btn w-4 h-4 ml-2'>
+                <HomeLogo className="route-icons" />
+              </div>
             </a>
           </Link>
           {/* <Route path="/" render={ props => {<Home {...props} searchData={searchState} />} } /> */}
           <Link href="/create-item">
-            <a className="nav-btn">
-              Create
+            <a className="nav-btn" style={ {display:'flex'} }>
+              <div className='nav-btn-btn'>
+                Create
+              </div>
+              <div className='nav-small-btn w-4 h-4 ml-2'>
+                <Add className="route-icons" />
+              </div>
             </a>
           </Link>
           <Link href="/my-assets">
-            <a className="nav-btn">
-              Your Collection
+            <a className="nav-btn" style={ {display:'flex'} }>
+              <div className='nav-btn-btn'>
+                Your Collection
+              </div>
+              <div className='nav-small-btn w-4 h-4 ml-2'>
+                <Collection className="route-icons" />
+              </div>
             </a>
           </Link>
           <Link href="/creator-dashboard">
-            <a className="nav-btn">
-              Your Transactions
+            <a className="nav-btn" style={ {display:'flex'} }>
+              <div className='nav-btn-btn'>
+                Your Transactions
+              </div>
+              <div className='nav-small-btn w-4 h-4 ml-2 mb-2'>
+                <Transactions className="route-icons" />
+              </div>
             </a>
           </Link>
         </div>

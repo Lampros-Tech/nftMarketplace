@@ -11,6 +11,8 @@
     align-items: center;
     margin-left: 20px;
     color:crimson;
+    width: 40px;
+    height: 40px;
 }
 
 /* .logos {
@@ -50,6 +52,8 @@
     padding: 10px 20px;
     margin: 3px;
     display: flex;
+    align-items: center;
+    align-content: center;
     background-color: azure;
     border-radius: 10px;
     border: 0.5px solid transparent;
@@ -57,13 +61,12 @@
     background-image: url("https://www.pngitem.com/pimgs/m/42-422736_paw-print-x-dog-image-free-clip-art.png");
 }
 
-.nav-btn:hover{
+.nav-btn:hover, .nav-btn .active{
     border: 0.5px solid crimson;
+    fill: crimson;
+    background: black;
 }
 
-.nav-btn:active{
-    border: 0.5px solid crimson;
-}
 
 .address-holder{
     display: flex;
@@ -125,4 +128,29 @@
 
 .dsb{
     cursor:not-allowed;
+}
+
+@media (max-width : 1420px) {
+    .nav-btn-btn{
+        display: none;
+    }
+    .nav-small-btn{
+        padding-left: 0px;
+    }
+}
+
+@media (max-width : 1085px) {
+    .address-holder{
+        display: block;
+        width: auto;
+    }
+    .my-address{
+        display: none;
+    }
+}
+
+@media (max-width : 855px){
+    .nav-btn{
+        padding: 5px;
+    }
 }
