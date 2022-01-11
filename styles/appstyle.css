@@ -61,14 +61,13 @@
     background-image: url("https://www.pngitem.com/pimgs/m/42-422736_paw-print-x-dog-image-free-clip-art.png");
 }
 
-.nav-btn:hover, .nav-btn .active{
+.nav-btn:hover {
     border: 0.5px solid crimson;
     fill: crimson;
-    background: black;
 }
 
 
-.address-holder{
+.address-holder {
     display: flex;
     color: crimson;
     align-items: center;
@@ -104,6 +103,7 @@
     width: 321px;
     height: 272px;
     overflow: hidden;
+    margin: 0 auto;
 }
 
 .rounded{
@@ -130,10 +130,125 @@
     cursor:not-allowed;
 }
 
+/* Rightsidebar style */
+
+.rightsidebar{
+    top: 0 !important;
+    right: 0 !important;
+    position: absolute;
+    width: 300px;
+}
+
+.rightsidebar-container{
+    background-color: black;
+    padding: 20px 5px;
+    border-radius: 5px;
+}
+
+.nav-btns{
+    padding: 10px 20px;
+    margin: 3px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    background-color: azure;
+    border-radius: 10px;
+    border: 0.5px solid transparent;
+    color: crimson;
+    width: 280px;
+    background-image: url("https://www.pngitem.com/pimgs/m/42-422736_paw-print-x-dog-image-free-clip-art.png");
+    font-size: 20px;
+}
+
+.searches{
+    display: flex;
+    width: 280px;   
+}
+
+.address-holders {
+    display: flex;
+    color: crimson;
+    align-items: center;
+    width: 280px;
+    background-color: white;
+    border-radius: 10px;
+    flex-wrap: nowrap;
+    padding: 10px 20px;
+    margin: 3px;
+    font-size: 20px;
+}
+
+.my-addresses{
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-icon {
+    display: none;
+}
+
+.profile {
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    margin-top: -77px;
+}
+
+.profile-detail{
+    margin: 0 auto;
+    width: 400px;
+}
+
+.profile-empty{
+    width: 100%;
+    color:white;
+    border: 1px solid firebrick;
+    height: 200px;
+    background-color: gray;
+}
+
+.profile-pic-holder {
+    margin: 0 auto;
+    width: 150px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 30px;
+}
+
+.profile-image{
+    border-radius: 45px;
+    border: 3px solid crimson;
+}
+
+.profile-username, .profile-email, .profile-bio {
+    display: block;
+    text-align: center;
+}
+
+.settings-icon {
+    position: absolute;
+    top: 300px;
+    right: 21px;
+}
+
+.popup-heading{
+    background-color: crimson;
+    padding: 12px 10px;
+    border-radius: 10px;
+}
+
+
+
+
 @media (max-width : 1420px) {
     .nav-btn-btn{
         display: none;
     }
+
     .nav-small-btn{
         padding-left: 0px;
     }
@@ -144,6 +259,7 @@
         display: block;
         width: auto;
     }
+
     .my-address{
         display: none;
     }
@@ -152,5 +268,39 @@
 @media (max-width : 855px){
     .nav-btn{
         padding: 5px;
+    }
+}
+
+@media (max-width : 750px){
+    .nav-btn{
+        display: none !important;
+    }
+
+    .address-holder{
+        display: none !important;
+    }
+    .menu-icon{
+        display: inline-block;
+    }
+    .navs {
+        display: inline-flex;
+    }
+    .search {
+        width: auto;
+    }
+}
+
+@media (max-width : 530px){
+    .search{
+        display: none;
+    }
+    .profile-account-holder{
+        width: auto;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .profile-detail{
+        width: 330px;
     }
 }

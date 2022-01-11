@@ -71,7 +71,7 @@ export default function Home(searchData) {
           seller: i.seller,
           owner: i.owner,
           image: meta.data.image,
-          name: meta.data.name,
+          name: meta.data.name + " #" + i.itemId.toNumber(),
           description: meta.data.description,
         }
       }
