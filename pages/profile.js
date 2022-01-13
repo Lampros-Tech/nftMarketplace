@@ -4,6 +4,13 @@ import { Dialog, Transition } from '@headlessui/react'
 
 
 function Profile() {
+
+    // const pgp = require('pg-promise')({
+    //     noWarnings: true
+    // })
+
+    // const db = pgp(`postgres://User:Password@localhost:5432/product-test`)
+
     const [acc, setAcc] = useState([])
 
     const [open, setOpen] = useState(false)
@@ -57,7 +64,7 @@ function Profile() {
                     </div>
                     <div className="profile-bio pt-10">
                         <strong className="">Account:</strong>
-                        <div class="profile-account-holder"> {acc} </div>
+                        <div className="profile-account-holder"> {acc} </div>
                     </div>
                 </div>
             </div>

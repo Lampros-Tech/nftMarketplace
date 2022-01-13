@@ -106,11 +106,13 @@ function Marketplace({ Component, pageProps }) {
             </a>
           </Link>
         </div>
+        <div>
+          <div className='menu-icon' style={{ textAlign:"center", paddingTop:'15px' }}>
+            <button onClick={()=>{ setToggle(true) }}><Menu style={{width:'25px'}} /></button>
+          </div>
+        </div>
         <Link href="/profile">
           <a>
-            <div className='menu-icon' style={{ textAlign:"center", paddingTop:'15px' }}>
-              <button onClick={()=>{ setToggle(true) }}><Menu style={{width:'25px'}} /></button>
-            </div>
             <div className='address-holder'>
               <div className='my-address' title={acc}>{acc}</div>
               <Wallet />

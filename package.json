@@ -16,12 +16,15 @@
     "@openzeppelin/contracts": "^4.2.0",
     "axios": "^0.21.1",
     "chai": "^4.3.4",
+    "crypto-js": "^4.1.1",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.4.1",
     "hardhat": "^2.4.3-rc.0",
     "ipfs-http-client": "50.1.2",
+    "net": "^1.0.2",
     "next": "11.0.1",
     "npm-cache": "^0.7.0",
+    "pg-promise": "^10.11.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hooks-global-state": "^1.0.2",
@@ -36,5 +39,9 @@
     "eslint-config-next": "11.0.1",
     "postcss": "^8.3.5",
     "tailwindcss": "^2.2.4"
+  },
+  "browser": {
+    "crypto": false,
+    "stream": false
   }
 }
