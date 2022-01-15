@@ -155,9 +155,9 @@
     border-radius: 10px;
     border: 0.5px solid transparent;
     color: crimson;
-    width: 280px;
+    width: 220px;
     background-image: url("https://www.pngitem.com/pimgs/m/42-422736_paw-print-x-dog-image-free-clip-art.png");
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .searches{
@@ -185,7 +185,7 @@
 }
 
 .menu-icon {
-    display: none;
+    display: block;
 }
 
 .profile {
@@ -244,7 +244,7 @@
 
 
 
-@media (max-width : 1420px) {
+@media (max-width : 1000px) {
     .nav-btn-btn{
         display: none;
     }

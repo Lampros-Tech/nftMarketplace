@@ -19,7 +19,7 @@ function Profile() {
     const [avatars, setAvatar] = useState("")
 
     const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("")
+    const [bio, setBio] = useState("")
 
     function saveData(){
         console.log(username, email);
@@ -59,8 +59,8 @@ function Profile() {
                         <div> Unnamed </div>
                     </div>
                     <div className="profile-email pt-10">
-                        <strong className="">Email:</strong>
-                        <div> Unknown </div>
+                        <strong className="">Bio:</strong>
+                        <div> No Bio </div>
                     </div>
                     <div className="profile-bio pt-10">
                         <strong className="">Account:</strong>
@@ -130,16 +130,17 @@ function Profile() {
                                     />
                                 </div>
                                 <div className="text-sm text-gray-500 mt-5">
-                                    <label htmlFor="Email">Enter your Email:</label>
-                                    <input 
-                                        className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                    <label htmlFor="Email">Enter your Bio:</label>
+                                    <textarea 
+                                        className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none" 
                                         style={{maxWidth:'500px', width:'100%'}} 
                                         type="email"
                                         name="username" 
-                                        placeholder="Please provide your email..." 
+                                        placeholder="Please write something about yourself..." 
+                                        rows={5}
                                         onChange={(event)=>{
                                         var email = event.target.value;
-                                        setEmail(email);
+                                        setBio(email);
                                         }}
                                         required
                                     />

@@ -20,9 +20,11 @@ if (process.env.NEXT_PUBLIC_WORKSPACE_URL) {
   rpcEndpoint = process.env.NEXT_PUBLIC_WORKSPACE_URL
 }
 
-export default function Home(searchData) {
+function Home(props){
 
   const [acc, setAcc] = useState([])
+
+  // console.log(props.value)
 
   async function onInit() {
     await window.ethereum.enable();
@@ -129,3 +131,20 @@ export default function Home(searchData) {
     </div>
   )
 }
+
+// Home.getInitialProps = async(context) => {
+//   console.log(context)
+//   if(context == undefined){
+//     console.log("It ain't working")
+//   }
+//   else{
+//     return {
+//       props: {
+//         value: context.query.id
+//         //context.query
+//       }, // will be passed to the page component as props
+//     }
+//   }
+// }
+
+export default Home

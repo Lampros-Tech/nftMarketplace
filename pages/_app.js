@@ -2,7 +2,8 @@ import '../styles/globals.css'
 import '../styles/appstyle.css'
 import Link from 'next/link'
 import "next/image"
-import { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import useWatch from './hooks/useWatch'
 
 import HomeLogo from "../public/Images/HomeTest.js"
 import Add from "../public/Images/add.js"
@@ -11,8 +12,18 @@ import Transactions from "../public/Images/transactions.js"
 import Wallet from "../public/Images/wallet.js"
 import Menu from "../public/Images/menu.js"
 import Close from "../public/Images/close.js"
+import SearchIcon from "../public/Images/search.js"
+import AboutIcon from "../public/Images/about-icon.js"
+import ProfileIcon from "../public/Images/profile-icon.js"
+import MetaMaskLogo from "../public/Images/metamask.js"
 
 import { useRouter } from "next/router"
+
+import Button from "@material-tailwind/react/Button";
+import Popover from "@material-tailwind/react/Popover";
+import PopoverContainer from "@material-tailwind/react/PopoverContainer";
+// import PopoverHeader from "@material-tailwind/react/PopoverHeader";
+import PopoverBody from "@material-tailwind/react/PopoverBody";
 
 function Marketplace({ Component, pageProps }) {
 
@@ -20,7 +31,11 @@ function Marketplace({ Component, pageProps }) {
 
   const [toggler, setToggle] = useState(false)
 
+  var searches = ""
+
   const router = useRouter()
+
+  const buttonRef = useRef();
 
   const activeStyle = {
     backgroundColor : 'black',
@@ -46,8 +61,12 @@ function Marketplace({ Component, pageProps }) {
 
   
   const [searchState, setSearch] = useState("")
+
+  useWatch(() => {
+    searches = searchState;
+    //console.log(searches)
+  }, [ searchState ])
   
-  //console.log(searchState)
 
   onInit()
   return (
@@ -57,17 +76,27 @@ function Marketplace({ Component, pageProps }) {
           <img className='logos' src="/Images/155750.svg" width="40px" height="40px" /> 
         </div>
         <div className='search'>
-          <input type='text' className='searchtext' placeholder='search...' onChange={ (event) => {setSearch(event.target.value)} } />
+          <input type='text' className='searchtext' placeholder='search...' onChange={ (event) => { setSearch(event.target.value) } } />
         </div>
         <div className="sub-navs">
           {/* <Link 
             href="/:id"
             render={props => { <Home {...props} searchData = {searchState} /> }}
           > */}
+          {/* <Link href={
+            {
+              pathname: '/[id]',
+              query: {
+                id: searches,
+              }
+            }
+          }
+          as = { `/${searches}` }
+          > */}
           <Link href="/">
             <a className={"nav-btn"} style={ (router.pathname) === '/' ? activeStyle : {display:'flex', fill:'crimson' }  }>
               <div className='nav-btn-btn'>
-                Home
+                Marketplace
               </div>
               <div className='nav-small-btn w-4 h-4 ml-2'>
                 <HomeLogo className="route-icons" />
@@ -75,7 +104,27 @@ function Marketplace({ Component, pageProps }) {
             </a>
           </Link>
           {/* <Route path="/" render={ props => {<Home {...props} searchData={searchState} />} } /> */}
-          <Link href="/create-item">
+          <Link href="/explore">
+          <a className="nav-btn" style={ (router.pathname) === '/explore' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+              <div className='nav-btn-btn'>
+                Explore
+              </div>
+              <div className='nav-small-btn w-4 h-4 ml-2'>
+                <SearchIcon className="route-icons" />
+              </div>
+            </a>
+          </Link>
+          <Link href="/about">
+          <a className="nav-btn" style={ (router.pathname) === '/about' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+              <div className='nav-btn-btn'>
+                About
+              </div>
+              <div className='nav-small-btn w-4 h-4 ml-2'>
+                <AboutIcon className="route-icons" />
+              </div>
+            </a>
+          </Link>
+          {/* <Link href="/create-item">
             <a className="nav-btn" style={ (router.pathname) === '/create-item' ? activeStyle : {display:'flex', fill:'crimson' }  }>
               <div className='nav-btn-btn'>
                 Create
@@ -104,21 +153,106 @@ function Marketplace({ Component, pageProps }) {
                 <Transactions className="route-icons" />
               </div>
             </a>
-          </Link>
+          </Link> */}
         </div>
         <div>
-          <div className='menu-icon' style={{ textAlign:"center", paddingTop:'15px' }}>
-            <button onClick={()=>{ setToggle(true) }}><Menu style={{width:'25px'}} /></button>
+          <div className='menu-icon' style={{ textAlign:"center" }}>
+            {/* <button onClick={()=>{ setToggle(true) }}><Menu style={{width:'25px'}} /></button> */}
+            <Button ref={buttonRef} ripple="light">
+                <Menu style={{width:'25px'}} />
+            </Button>
+            <Popover placement="bottom" ref={buttonRef}>
+              <PopoverContainer>
+                {/* <PopoverHeader>Popover bottom</PopoverHeader> */}
+                <PopoverBody className='pt-8'>
+                  {/* <Route path="/" render={ props => {<Home {...props} searchData={searchState} />} } /> */}
+                  <Link href="/">
+                    <a className={"nav-btns"} style={ (router.pathname) === '/' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                      <div className='nav-btn-btns'>
+                        Marketplace
+                      </div>
+                      <div className='nav-small-btn w-4 h-4 ml-2'>
+                        <HomeLogo className="route-icons" />
+                      </div>
+                    </a>
+                  </Link>
+                  {/* <Route path="/" render={ props => {<Home {...props} searchData={searchState} />} } /> */}
+                  <Link href="/explore">
+                  <a className="nav-btns" style={ (router.pathname) === '/explore' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                      <div className='nav-btn-btns'>
+                        Explore
+                      </div>
+                      <div className='nav-small-btn w-4 h-4 ml-2'>
+                        <SearchIcon className="route-icons" />
+                      </div>
+                    </a>
+                  </Link>
+                  <Link href="/about">
+                  <a className="nav-btns" style={ (router.pathname) === '/about' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                      <div className='nav-btn-btns'>
+                        About
+                      </div>
+                      <div className='nav-small-btn w-4 h-4 ml-2'>
+                        <AboutIcon className="route-icons" />
+                      </div>
+                    </a>
+                  </Link>
+                  <Link href="/create-item">
+                    <a className="nav-btns" style={ (router.pathname) === '/create-item' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                      <div className='nav-btn-btns'>
+                        Mint Token
+                      </div>
+                      <div className='nav-small-btn w-4 h-4 ml-2'>
+                        <Add className="route-icons" />
+                      </div>
+                    </a>
+                  </Link>
+                  <Link href="/creator-dashboard">
+                    <a className="nav-btns" style={ (router.pathname) === '/creator-dashboard' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                      <div className='nav-btn-btns'>
+                        Creations
+                      </div>
+                      <div className='nav-small-btn w-4 h-4 ml-2 mb-2'>
+                        <Transactions className="route-icons" />
+                      </div>
+                    </a>
+                  </Link>
+                  <Link href="/my-assets">
+                    <a className="nav-btns" style={ (router.pathname) === '/my-assets' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                      <div className='nav-btn-btns'>
+                        Collection
+                      </div>
+                      <div className='nav-small-btn w-4 h-4 ml-2'>
+                        <Collection className="route-icons" />
+                      </div>
+                    </a>
+                  </Link>
+                  <Link href="/profile">
+                    <a className="nav-btns" style={ (router.pathname) === '/profile' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                      <div className='nav-btn-btns'>
+                        Edit Profile
+                      </div>
+                      <div className='nav-small-btn w-4 h-4 ml-2 mb-2'>
+                        <ProfileIcon className="route-icons" />
+                      </div>
+                    </a>
+                  </Link>
+                  <button className='nav-btns' style={ { background: 'crimson', color:'white' } }>
+                    Disconnect &nbsp;<MetaMaskLogo />
+                  </button>
+                </PopoverBody>
+              </PopoverContainer>
+            </Popover>
           </div>
         </div>
-        <Link href="/profile">
+        {/* <Link href="/profile">
           <a>
             <div className='address-holder'>
               <div className='my-address' title={acc}>{acc}</div>
               <Wallet />
             </div>
           </a>
-        </Link>
+        </Link> */}
       </nav>
       <Component {...pageProps} />
       {
@@ -184,6 +318,7 @@ function Marketplace({ Component, pageProps }) {
                   </div>
                 </a>
               </Link>
+              
           </div>
         </div>
         :
