@@ -46,17 +46,22 @@ function Marketplace({ Component, pageProps }) {
   }
 
   async function onInit() {
-    await window.ethereum.enable();
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    const account = accounts[0];
-    // console.log(typeof account)
-    // console.log(account)
-     window.ethereum.on('accountsChanged', function (accounts) {
-      // Time to reload your interface with accounts[0]!
-      // console.log(accounts[0])
-      return accounts[0]
-    });
-    setAcc(account);
+    if(typeof web3 !== 'undefined'){
+      await window.ethereum.enable();
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const account = accounts[0];
+      // console.log(typeof account)
+      // console.log(account)
+      window.ethereum.on('accountsChanged', function (accounts) {
+        // Time to reload your interface with accounts[0]!
+        // console.log(accounts[0])
+        return accounts[0]
+      });
+      setAcc(account);
+    }
+    else{
+      return null;
+    }
   }
 
   
@@ -167,7 +172,7 @@ function Marketplace({ Component, pageProps }) {
                 <PopoverBody className='pt-8'>
                   {/* <Route path="/" render={ props => {<Home {...props} searchData={searchState} />} } /> */}
                   <Link href="/">
-                    <a className={"nav-btns"} style={ (router.pathname) === '/' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                    <a className="nav-btns resize" style={ (router.pathname) === '/' ? activeStyle : {display:'flex', fill:'crimson' }  }>
                       <div className='nav-btn-btns'>
                         Marketplace
                       </div>
@@ -178,7 +183,7 @@ function Marketplace({ Component, pageProps }) {
                   </Link>
                   {/* <Route path="/" render={ props => {<Home {...props} searchData={searchState} />} } /> */}
                   <Link href="/explore">
-                  <a className="nav-btns" style={ (router.pathname) === '/explore' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                  <a className="nav-btns resize" style={ (router.pathname) === '/explore' ? activeStyle : {display:'flex', fill:'crimson' }  }>
                       <div className='nav-btn-btns'>
                         Explore
                       </div>
@@ -188,7 +193,7 @@ function Marketplace({ Component, pageProps }) {
                     </a>
                   </Link>
                   <Link href="/about">
-                  <a className="nav-btns" style={ (router.pathname) === '/about' ? activeStyle : {display:'flex', fill:'crimson' }  }>
+                  <a className="nav-btns resize" style={ (router.pathname) === '/about' ? activeStyle : {display:'flex', fill:'crimson' }  }>
                       <div className='nav-btn-btns'>
                         About
                       </div>
@@ -237,9 +242,16 @@ function Marketplace({ Component, pageProps }) {
                       </div>
                     </a>
                   </Link>
-                  <button className='nav-btns' style={ { background: 'crimson', color:'white' } }>
-                    Disconnect &nbsp;<MetaMaskLogo />
-                  </button>
+                  {
+                    acc==='undefined' ?
+                    <button className='nav-btns' style={ { background: 'crimson', color:'white' } }>
+                      Connect &nbsp;<MetaMaskLogo />
+                    </button>
+                    :
+                    <button className='nav-btns' style={ { background: 'crimson', color:'white' } }>
+                      Disconnect &nbsp;<MetaMaskLogo />
+                    </button>
+                  }
                 </PopoverBody>
               </PopoverContainer>
             </Popover>

@@ -27,19 +27,24 @@ function Home(props){
   // console.log(props.value)
 
   async function onInit() {
-    await window.ethereum.enable();
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    const account = accounts[0];
-    // console.log(typeof account)
-    // console.log(account)
-     window.ethereum.on('accountsChanged', function (accounts) {
-      // Time to reload your interface with accounts[0]!
-      // console.log(accounts[0])
-      return accounts[0]
-    });
-    setAcc(account);
+    if(typeof web3 !== 'undefined'){
+      await window.ethereum.enable();
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const account = accounts[0];
+      // console.log(typeof account)
+      // console.log(account)
+      window.ethereum.on('accountsChanged', function (accounts) {
+        // Time to reload your interface with accounts[0]!
+        // console.log(accounts[0])
+        return accounts[0]
+      });
+      setAcc(account);
 
-    return account
+      return account
+    }
+    else{
+      return null;
+    }
   }
 
 
@@ -63,20 +68,19 @@ function Home(props){
 
       var item = {}
 
-      if(i.seller.toLowerCase() !== account){
-        const tokenUri = await tokenContract.tokenURI(i.tokenId)
-        const meta = await axios.get(tokenUri)
-        let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
-        item = {
-          price,
-          itemId: i.itemId.toNumber(),
-          seller: i.seller,
-          owner: i.owner,
-          image: meta.data.image,
-          name: meta.data.name + " #" + i.itemId.toNumber(),
-          description: meta.data.description,
-        }
+      const tokenUri = await tokenContract.tokenURI(i.tokenId)
+      const meta = await axios.get(tokenUri)
+      let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+      item = {
+        price,
+        itemId: i.itemId.toNumber(),
+        seller: i.seller,
+        owner: i.owner,
+        image: meta.data.image,
+        name: meta.data.name + " #" + i.itemId.toNumber(),
+        description: meta.data.description,
       }
+
       return item
     }))
 

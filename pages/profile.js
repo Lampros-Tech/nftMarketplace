@@ -1,15 +1,25 @@
 import Settings from "../public/Images/settings.js"
 import { useState, Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+// import excuteQuery from "./db.js"
+
 
 
 function Profile() {
 
-    // const pgp = require('pg-promise')({
-    //     noWarnings: true
-    // })
+    // const pgp = require('pg-promise')()
 
-    // const db = pgp(`postgres://User:Password@localhost:5432/product-test`)
+    // const user = 'marketuser'
+
+    // const password = 'M@rket+1211'
+
+    // const host = "localhost"
+
+    // const port = 54321
+
+    // const db_name = 'marketplace'
+
+    // const db = pgp(`postgres://${user}:${password}@${host}:${port}/${db_name}`)
 
     const [acc, setAcc] = useState([])
 
@@ -20,11 +30,6 @@ function Profile() {
 
     const [username, setUsername] = useState("")
     const [bio, setBio] = useState("")
-
-    function saveData(){
-        console.log(username, email);
-    }
-
 
     async function onInit() {
         await window.ethereum.enable();
@@ -39,6 +44,10 @@ function Profile() {
         });
         setAcc(account);
       }
+
+    async function createUser(username, bio){
+        console.log(username, bio)
+    }
 
     onInit();
 
@@ -166,7 +175,7 @@ function Profile() {
                             type="button"
                             className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-md"
                             onClick={ ()=>{
-                                saveData()
+                                createUser(username, bio)
                             }}
                         >
                             Create
