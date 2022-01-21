@@ -6,7 +6,7 @@ import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../artifacts/contracts/Market.sol/NFTMarket.json'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import useQuery from './useQuery'
+import useQuery from './hooks/useQuery'
 import router from 'next/router'
 
 let rpcEndpoint = null

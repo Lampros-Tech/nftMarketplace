@@ -4,7 +4,6 @@ import Link from 'next/link'
 import "next/image"
 import React, { useState, useRef, useEffect } from 'react'
 
-// import { useSearchFetch } from './hooks/useSearchFetch'
 
 import HomeLogo from "../public/Images/HomeTest.js"
 import Add from "../public/Images/add.js"
@@ -25,7 +24,6 @@ import Popover from "@material-tailwind/react/Popover";
 import PopoverContainer from "@material-tailwind/react/PopoverContainer";
 // import PopoverHeader from "@material-tailwind/react/PopoverHeader";
 import PopoverBody from "@material-tailwind/react/PopoverBody";
-import { getSortedRoutes } from 'next/dist/next-server/lib/router/utils'
 
 function Marketplace({ Component, pageProps }) {
 
