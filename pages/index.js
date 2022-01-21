@@ -2,10 +2,7 @@ import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Web3Modal from "web3modal"
-// import { createStore } from 'redux'
-// import { createGlobalState } from 'react-hooks-global-state';
-
-// const store = createStore(todos, ['Use Redux'])
+import { useSearchFetch } from './hooks/useSearchFetch'
 
 import {
   nftaddress, nftmarketaddress
@@ -20,19 +17,16 @@ if (process.env.NEXT_PUBLIC_WORKSPACE_URL) {
   rpcEndpoint = process.env.NEXT_PUBLIC_WORKSPACE_URL
 }
 
-function Home(props){
+function Home(){
 
   const [acc, setAcc] = useState([])
-
-  // console.log(props.value)
-
+  
   async function onInit() {
     if(typeof web3 !== 'undefined'){
       await window.ethereum.enable();
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       const account = accounts[0];
-      // console.log(typeof account)
-      // console.log(account)
+      
       window.ethereum.on('accountsChanged', function (accounts) {
         // Time to reload your interface with accounts[0]!
         // console.log(accounts[0])
@@ -48,8 +42,6 @@ function Home(props){
   }
 
 
-  // const [searchState, setSearch] = useGlobalState("search");
-  // console.log(searchData)
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
   useEffect(() => {
@@ -77,7 +69,7 @@ function Home(props){
         seller: i.seller,
         owner: i.owner,
         image: meta.data.image,
-        name: meta.data.name + " #" + i.itemId.toNumber(),
+        name: meta.data.name + "#" + i.itemId.toNumber(),
         description: meta.data.description,
       }
 
@@ -106,12 +98,10 @@ function Home(props){
   }
 
   onInit()
-  // if( window.searchText.value === null ) return (<h2>Try It</h2>)
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
   return (
     <div className="contents">
       <div className="px-4 main-container" style={{ marginTop: '50px' }}>
-        {/* <div> { window.searchText.value } </div> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 sample">
           {
             nfts.map((nft, i) => (
@@ -135,20 +125,5 @@ function Home(props){
     </div>
   )
 }
-
-// Home.getInitialProps = async(context) => {
-//   console.log(context)
-//   if(context == undefined){
-//     console.log("It ain't working")
-//   }
-//   else{
-//     return {
-//       props: {
-//         value: context.query.id
-//         //context.query
-//       }, // will be passed to the page component as props
-//     }
-//   }
-// }
 
 export default Home

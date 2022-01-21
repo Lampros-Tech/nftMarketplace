@@ -2,8 +2,9 @@ import '../styles/globals.css'
 import '../styles/appstyle.css'
 import Link from 'next/link'
 import "next/image"
-import React, { useState, useRef } from 'react'
-import useWatch from './hooks/useWatch'
+import React, { useState, useRef, useEffect } from 'react'
+
+// import { useSearchFetch } from './hooks/useSearchFetch'
 
 import HomeLogo from "../public/Images/HomeTest.js"
 import Add from "../public/Images/add.js"
@@ -24,12 +25,15 @@ import Popover from "@material-tailwind/react/Popover";
 import PopoverContainer from "@material-tailwind/react/PopoverContainer";
 // import PopoverHeader from "@material-tailwind/react/PopoverHeader";
 import PopoverBody from "@material-tailwind/react/PopoverBody";
+import { getSortedRoutes } from 'next/dist/next-server/lib/router/utils'
 
 function Marketplace({ Component, pageProps }) {
 
   const [acc, setAcc] = useState([])
 
   const [toggler, setToggle] = useState(false)
+
+  const [searchState, setSearch] = useState("")
 
   var searches = ""
 
@@ -44,6 +48,12 @@ function Marketplace({ Component, pageProps }) {
     display : 'flex',
     border: '0.5px solid crimson',
   }
+
+  useEffect(()=>{
+    setSearch(searchState)
+
+    console.log(searchState)
+  },[setSearch, searchState])
 
   async function onInit() {
     if(typeof web3 !== 'undefined'){
@@ -64,13 +74,21 @@ function Marketplace({ Component, pageProps }) {
     }
   }
 
-  
-  const [searchState, setSearch] = useState("")
+  function setRoute(e){
+    const value = e.target.value
 
-  useWatch(() => {
-    searches = searchState;
-    //console.log(searches)
-  }, [ searchState ])
+    if(value === ""){
+      router.push("/")
+    }else{
+      router.push(`/${value}`)
+    }
+  }
+
+  
+  // useWatch(() => {
+  //   searches = searchState;
+  //   //console.log(searches)
+  // }, [ searchState ])
   
 
   onInit()
@@ -81,24 +99,15 @@ function Marketplace({ Component, pageProps }) {
           <img className='logos' src="/Images/155750.svg" width="40px" height="40px" /> 
         </div>
         <div className='search'>
-          <input type='text' className='searchtext' placeholder='search...' onChange={ (event) => { setSearch(event.target.value) } } />
+          <input type='text' className='searchtext' placeholder='search...' onKeyDown={ (e) => { if(e.key === 'Enter') {setRoute(e)} } } />
         </div>
         <div className="sub-navs">
           {/* <Link 
             href="/:id"
             render={props => { <Home {...props} searchData = {searchState} /> }}
           > */}
-          {/* <Link href={
-            {
-              pathname: '/[id]',
-              query: {
-                id: searches,
-              }
-            }
-          }
-          as = { `/${searches}` }
-          > */}
-          <Link href="/">
+          {/* <Link href={{ pathname: '/', query : { searchState } }}> */}
+          <Link href={ "/" + searchState }>
             <a className={"nav-btn"} style={ (router.pathname) === '/' ? activeStyle : {display:'flex', fill:'crimson' }  }>
               <div className='nav-btn-btn'>
                 Marketplace

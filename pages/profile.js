@@ -1,25 +1,14 @@
 import Settings from "../public/Images/settings.js"
 import { useState, Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import axios from 'axios'
 // import excuteQuery from "./db.js"
 
 
 
 function Profile() {
 
-    // const pgp = require('pg-promise')()
-
-    // const user = 'marketuser'
-
-    // const password = 'M@rket+1211'
-
-    // const host = "localhost"
-
-    // const port = 54321
-
-    // const db_name = 'marketplace'
-
-    // const db = pgp(`postgres://${user}:${password}@${host}:${port}/${db_name}`)
+    const BASE_URL = "http://127.0.0.1:5000"
 
     const [acc, setAcc] = useState([])
 
@@ -47,6 +36,15 @@ function Profile() {
 
     async function createUser(username, bio){
         console.log(username, bio)
+        const headers={
+            'Content-Type' : 'application/json',
+            'Access-Control-Allow-Origin' : '*'
+
+        }
+        axios.get(BASE_URL+"/get_all_user", { headers : headers })
+        .then((res)=>{
+            console.log(res)
+        })
     }
 
     onInit();
