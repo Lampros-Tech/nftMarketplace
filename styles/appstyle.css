@@ -1,7 +1,7 @@
 .navs{
     display: flex;
     background:whitesmoke;
-    box-shadow: 1px 1px 20px;
+    box-shadow: 1px 1px 12px;
     padding: 20px;
     width: 100%;
 }
@@ -19,6 +19,11 @@
     background-color: crimson;
     border-radius: 10px;
 } */
+
+img.rounded{
+    background-size: cover;
+    overflow: auto;
+}
 
 .search{
     display: flex;
@@ -99,6 +104,10 @@
     width: 90%;
 }
 
+.sample-cards{
+    width : auto; 
+}
+
 .imageholder{
     width: 321px;
     height: 272px;
@@ -115,7 +124,13 @@
 }
 
 .dash-container{
-    height: 540px;
+    height: 395px;
+}
+
+.dash-container:hover{
+    transform: translate3d(0px, 2px, 10px);
+    box-shadow: grey 0 0 20px;
+    cursor: pointer;
 }
 
 .bs-btn {
@@ -155,7 +170,7 @@
     border-radius: 10px;
     border: 0.5px solid transparent;
     color: crimson;
-    width: 220px;
+    width: 210px;
     background-image: url("https://www.pngitem.com/pimgs/m/42-422736_paw-print-x-dog-image-free-clip-art.png");
     font-size: 16px;
 }
@@ -246,7 +261,109 @@
 }
 
 
+/*-----------------------------------------------------------------------------------------------------------------------
+                                                Explore
+-----------------------------------------------------------------------------------------------------------------------*/
+.leftsidebar{
+    float:left;
+    height: 100VH;
+    background-color: gray;
+    width: 350px;
+}
 
+ul.leftsidebar{
+    display: grid;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------
+                                                Single Page
+-----------------------------------------------------------------------------------------------------------------------*/
+
+.single-container{
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.single-image{
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.single-image-holder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+}
+
+.single-image-description{
+    width: calc(100% - 200px);
+}
+
+.nft-name{
+    font-size: 30px;
+    font-weight: 500;
+    color:rgb(59, 59, 59);
+    padding-bottom: 5px;
+}
+
+.nft-id{
+    font-size: 20px;
+    font-weight: 500;
+    color:rgb(59, 59, 59);
+    padding-bottom: 20px;
+}
+
+.nft-owner{
+    display: block;
+    padding: 10px 0 10px 0;
+}
+
+.nft-owner-title{
+    font-size: 20px;
+    font-weight: 500;
+    color:rgb(59, 59, 59);
+}
+
+.nft-description{
+    font-size: 17px;
+    padding-bottom: 20px;
+    width: auto;
+}
+
+.nft-owner-description{
+    height: 120px;
+}
+
+.nft-price{
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.single-eth-icon{
+    padding-top: 0px !important;
+}
+
+.single-eth-price{
+    font-size: 16px;
+}
+
+.nft-buy-button{
+    padding: 12px;
+}
+
+.single-bs-btn{
+    background-color: crimson;
+    width: 250px;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 500;
+}
 
 @media (max-width : 1000px) {
     .nav-btn-btn{

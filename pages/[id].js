@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import useQuery from './hooks/useQuery'
 import router from 'next/router'
+import EtherIcon from '../public/Images/ether-icon'
 
 let rpcEndpoint = null
 
@@ -59,11 +60,10 @@ function searches(){
                     router.push("/")
                 } else {
                     const lowQuery = query.toLowerCase()
-                    if(name.includes(lowQuery)) {
+                    if(name.match(lowQuery)) {
                         data.push(e)
                     }
                 }
-                // console.log(query)
             });
             return data
         }
@@ -76,35 +76,39 @@ function searches(){
     
 
     useEffect(()=>{
-        console.log(query)
         loadNfts(query);
     },[query])
 
     if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
     return (
         <div className="contents">
-        <div className="px-4 main-container" style={{ marginTop: '50px' }}>
-            {/* <div> { window.searchText.value } </div> */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 sample">
-            {
-                nfts.map((nft, i) => (
-                    <div key={i} className="border shadow rounded-xl overflow-hidden dash-container">
+            <div className="px-4 main-container" style={{ marginTop: '50px' }}>
+                <div className="pt-4 sample">
+                <div className='grid grid-cols-4 sample-cards'>
+                    {
+                    nfts.map((nft, i) => (
+                        <div key={i} className="border shadow rounded-xl mr-3 mb-3 overflow-hidden dash-container">
                         <div className="imageholder"><img src={nft.image} className='rounded' /></div>
-                        <div className="p-4">
-                        <p style={{ height: '45px', textOverflow:'ellipsis', whiteSpace:'nowrap', overflow:'hidden' }} className="text-2xl font-semibold">{nft.name}</p>
-                        <div style={{ height: '70px', overflow: 'hidden' }}>
-                            <p className="text-gray-400">{nft.description}</p>
+                        <div className="pt-1 pl-2 pr-2">
+                            <div className='flex pt-2 pl-2 pr-2'>
+                            <span style={{ height: '20px', textOverflow:'ellipsis', whiteSpace:'nowrap', overflow:'hidden', color:'#484848' }} className="flex-grow font-semibold">{nft.name}</span>
+                            <div className='grid text-right'>
+                                <span className='font-semibold' style={{ color:'#484848' }}>
+                                price
+                                </span>
+                                <div style={{ width: '80px', textOverflow:'ellipsis', whiteSpace:'nowrap', overflow:'hidden', fontSize:'14px', fontWeight:'500', width:'80px', textOverflow:'ellipsis', color:'#484848' }} className='inline'><EtherIcon />{nft.price} ETH</div>
+                            </div>
+                            </div>
                         </div>
+                        <div className="p-2">
+                            <button className="w-full text-white font-bold py-2 px-12 rounded bs-btn" onClick={() => buyNft(nft)}>Buy</button>
                         </div>
-                        <div className="p-4 bg-black">
-                        <p className="text-2xl mb-4 font-bold text-white">{nft.price} ETH</p>
-                        <button className="w-full text-white font-bold py-2 px-12 rounded bs-btn" onClick={() => buyNft(nft)}>Buy</button>
-                        </div>
-                    </div> 
-                ))
-            }
+                        </div> 
+                    ))
+                    }
+                </div>
+                </div>
             </div>
-        </div>
         </div>
     )
 }
