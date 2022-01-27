@@ -131,7 +131,7 @@ function Marketplace({ Component, pageProps }) {
           <div className='menu-icon' style={{ textAlign:"center" }}>
             {/* <button onClick={()=>{ setToggle(true) }}><Menu style={{width:'25px'}} /></button> */}
             <Button ref={buttonRef} ripple="light">
-                <Menu style={{width:'25px'}} />
+                <Menu style={{ width:'25px', height:'25px' }} />
             </Button>
             <Popover placement="bottom" ref={buttonRef}>
               <PopoverContainer>

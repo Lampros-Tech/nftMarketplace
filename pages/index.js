@@ -69,7 +69,7 @@ function Home(){
         price,
         itemId: i.itemId.toNumber(),
         seller: i.seller,
-        owner: i.owner,
+        owner: i.oldOwner,
         image: meta.data.image,
         name: meta.data.name + "#" + i.itemId.toNumber(),
         description: meta.data.description,
@@ -118,7 +118,7 @@ function Home(){
                         <span className='font-semibold' style={{color:'#484848'}}>
                           price
                         </span>
-                        <div style={{ width: '80px', textOverflow:'ellipsis', whiteSpace:'nowrap', overflow:'hidden', fontSize:'14px', fontWeight:'500', width:'80px', textOverflow:'ellipsis', color:'#484848'   }} className='inline'><EtherIcon style={{width:'20px',height:'0',paddingTop: '5px'}} />{nft.price} ETH</div>
+                        <div style={{ width: '80px', textOverflow:'ellipsis', whiteSpace:'nowrap', overflow:'hidden', fontSize:'14px', fontWeight:'500', width:'80px', textOverflow:'ellipsis', color:'#484848'   }} className='inline'><EtherIcon style={{width:'20px',height:'0',paddingTop: '5px'}} />{nft.price} &nbsp; FTM</div>
                       </div>
                     </div>
                   </div>

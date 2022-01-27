@@ -123,7 +123,7 @@ function Single(){
                                 <div className='nft-price-title'>Price:</div>
                                 <div className='nft-price'>
                                     <EtherIcon style={{ width:'32px', height:'30px' }} />
-                                    <div className='single-eth-price'>{nft.price}ETH</div>
+                                    <div className='single-eth-price'>{nft.price} &nbsp;FTM</div>
                                 </div>
                             </div>
                             <div className='nft-buy-button'>

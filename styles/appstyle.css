@@ -271,8 +271,16 @@ img.rounded{
     width: 350px;
 }
 
-ul.leftsidebar{
-    display: grid;
+.leftsidebar-header{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    padding: 10px;
+}
+
+.left-header{
+    font-size: 20px;
+    flex-grow: 1;
 }
 
 /*-----------------------------------------------------------------------------------------------------------------------
