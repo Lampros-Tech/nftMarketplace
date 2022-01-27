@@ -9,6 +9,12 @@ module.exports = {
     hardhat: {
       chainId: 1337
     },
+    fantom_test: {
+      // Infura
+      // url: `https://polygon-mumbai.infura.io/v3/${infuraId}`
+      url: "https://rpc.testnet.fantom.network/",
+      accounts: ['4f9cf3a0932dc7a10eeb113e95dbdad2930ec1ff3f4b2069035a30230dfd6053']
+    },
     /*
     mumbai: {
       // Infura

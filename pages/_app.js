@@ -29,11 +29,7 @@ function Marketplace({ Component, pageProps }) {
 
   const [acc, setAcc] = useState([])
 
-  const [toggler, setToggle] = useState(false)
-
   const [searchState, setSearch] = useState("")
-
-  var searches = ""
 
   const router = useRouter()
 

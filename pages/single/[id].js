@@ -7,8 +7,8 @@ import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import useQuery from '../hooks/useQuery'
-import router from 'next/router'
 import EtherIcon from '../../public/Images/ether-icon'
+import Web3Modal from "web3modal"
 
 let rpcEndpoint = null
 
@@ -77,6 +77,23 @@ function Single(){
         loadNfts(query);
     },[query])
 
+
+    async function buyNft(nft,event) {
+        event.stopPropagation();
+        const web3Modal = new Web3Modal()
+        const connection = await web3Modal.connect()
+        const provider = new ethers.providers.Web3Provider(connection)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
+    
+        const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
+        const transaction = await contract.createMarketSale(nftaddress, nft.itemId, {
+          value: price
+        })
+        await transaction.wait()
+        loadNFTs()
+    }
+
     if (loadingState === 'loaded' && (nfts.length>1 || !nfts.length)) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
     return(
         <div className='pt-10'>
@@ -103,14 +120,14 @@ function Single(){
                                 <div className='nft-owner-description'>{nft.description}</div>
                             </div>
                             <div className='nft-id'>
-                                <div className='nft-owner-title'>Price:</div>
+                                <div className='nft-price-title'>Price:</div>
                                 <div className='nft-price'>
                                     <EtherIcon style={{ width:'32px', height:'30px' }} />
                                     <div className='single-eth-price'>{nft.price}ETH</div>
                                 </div>
                             </div>
                             <div className='nft-buy-button'>
-                                <button className='single-bs-btn'>Buy Now</button>
+                                <button className='single-bs-btn' onClick={(event)=>{ buyNft(nft,event) }}>Buy Now</button>
                             </div>
                         </div>
                     </div>        

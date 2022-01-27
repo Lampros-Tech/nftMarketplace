@@ -335,13 +335,19 @@ ul.leftsidebar{
 }
 
 .nft-owner-description{
-    height: 120px;
+    height: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nft-price{
     display: flex;
     align-items: center;
     align-content: center;
+}
+
+.nft-price-title{
+    padding-top: 20px;
 }
 
 .single-eth-icon{
@@ -353,7 +359,7 @@ ul.leftsidebar{
 }
 
 .nft-buy-button{
-    padding: 12px;
+    padding: 12px 12px 12px 0;
 }
 
 .single-bs-btn{

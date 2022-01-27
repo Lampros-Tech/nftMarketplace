@@ -106,7 +106,7 @@ function Home(){
     <div className="contents">
       <div className="px-4 main-container" style={{ marginTop: '50px' }}>
         <div className="pt-4 sample">
-          <div className='grid grid-cols-4 sample-cards'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 sample-cards'>
             {
               nfts.map((nft, i) => (
                 <div key={i} className="border shadow rounded-xl mr-3 mb-3 overflow-hidden dash-container" onClick={()=>{ router.push(`/single/${nft.itemId}`) } }>

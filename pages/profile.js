@@ -1,5 +1,5 @@
 import Settings from "../public/Images/settings.js"
-import { useState, Fragment, useRef } from 'react'
+import { useState, Fragment, useRef, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import axios from 'axios'
 // import excuteQuery from "./db.js"
@@ -11,14 +11,18 @@ function Profile() {
     const BASE_URL = "http://127.0.0.1:5000"
 
     const [acc, setAcc] = useState([])
+    const [allUsers, setAllUsers] = useState([])
 
     const [open, setOpen] = useState(false)
     const cancelButtonRef = useRef(null)
 
-    const [avatars, setAvatar] = useState("")
-
+    const [avatars, setAvatar] = useState([])
     const [username, setUsername] = useState("")
     const [bio, setBio] = useState("")
+
+    const [formAvatars, setFormAvatar] = useState("")
+    const [formUsername, setFormUsername] = useState("")
+    const [formBio, setFormBio] = useState("")
 
     async function onInit() {
         await window.ethereum.enable();
@@ -34,20 +38,116 @@ function Profile() {
         setAcc(account);
       }
 
-    async function createUser(username, bio){
-        console.log(username, bio)
+    async function createUser(username, bio, avatars){
+        console.log(username, bio, avatars)
+        
+        const formData = new FormData()
+        
+        // const headers={
+        //     'Content-Type' : 'application/json',
+        //     'Access-Control-Allow-Origin' : '*'
+        // }
+
+        formData.append('profile_pic', avatars)
+        formData.append('username',username)
+        formData.append('address',acc)
+        formData.append('bio',bio)
+
+
+        // const data = {
+        //     username : username,
+        //     address : acc,
+        //     bio : bio,
+        //     profile_pic : formData
+        // }
+        
+        const headers={
+            'Content-Type' : 'multipart/form-data',
+            'Access-Control-Allow-Origin' : '*'
+        }
+
+        axios.post(BASE_URL+"/add_user", formData, { headers : headers })
+        .then((res)=>{
+            console.log(res.data)
+        })
+
+        setOpen(false)
+    }
+
+    useEffect(()=>{
+        onInit()
+        const all_usernames = []
+        axios.get(BASE_URL+"/get_all_username")
+        .then((res)=>{
+            const data = res.data
+
+            data.forEach((name)=>{
+                all_usernames.push(name)
+            })
+            setAllUsers(all_usernames)
+        })
+
+        //console.log(acc)
+
         const headers={
             'Content-Type' : 'application/json',
             'Access-Control-Allow-Origin' : '*'
-
         }
-        axios.get(BASE_URL+"/get_all_user", { headers : headers })
-        .then((res)=>{
-            console.log(res)
-        })
-    }
 
-    onInit();
+        const data = {
+            account : acc
+        }
+
+        axios.post(BASE_URL+"/get_all_users_with_account", data, { headers: headers })
+        .then((res)=>{
+            const data = res.data;
+            // console.log(data)
+            try{
+                if(data.includes('No User')){
+                    setUsername(null)
+                    setBio(null)
+                } else {
+    
+                }
+            } catch(e) {
+                setUsername(data['username'])
+                setBio(data['bio'])
+                // setAvatar(data['profile_pic'])
+            }
+        })
+
+        const imageData = {
+            account : acc
+        }
+
+
+        axios.post(BASE_URL+"/img", imageData, { headers : headers })
+        .then((res)=>{
+            const data = res.data;
+            try {
+                if(data.includes('No Image')){
+                    setAvatar(null)
+                } else {
+                    setAvatar(data)
+                }
+            } catch(e) {
+                setAvatar(null)
+            }
+        })
+        console.log(avatars)
+    },[acc])
+
+    /* ///////////////////////////////////////////////////////////////////////////////////////////////////////
+                                             Watch setOpen
+    //////////////////////////////////////////////////////////////////////////////////////////////////////// */
+    useEffect(() => {
+        if(open === false){
+            setFormAvatar("")
+            setFormUsername("")
+            setFormBio("")
+        }
+    },[open])
+
 
     return (
         <div>
@@ -58,16 +158,16 @@ function Profile() {
                 <div className="profile-detail">
                     <div className="profile-pic-holder">
                         <div className="profile-pic">
-                            <img className="profile-image" src="/Images/avatar.png" />
+                            <img className="profile-image" width="180px" height="180px" src={ avatars ? avatars.image : "/Images/avatar.png" } />
                         </div>
                     </div>
                     <div className="profile-username pt-10">
                         <strong className="">Username:</strong>
-                        <div> Unnamed </div>
+                        <div className="profile-complete-username"> {username ? username : 'unknown' } </div>
                     </div>
                     <div className="profile-email pt-10">
                         <strong className="">Bio:</strong>
-                        <div> No Bio </div>
+                        <div className="profile-complete-bio"> {bio ? bio : 'No Bio'} </div>
                     </div>
                     <div className="profile-bio pt-10">
                         <strong className="">Account:</strong>
@@ -117,54 +217,54 @@ function Profile() {
                             Create Your Profile
                             </Dialog.Title>
                             <div className="mt-2">
-                            <div className="text-sm text-gray-500 mt-4">
-                                <label htmlFor="username">Upload Profile Pic:</label>
-                                <input className='ml-2' type="file" name="userPic" defaultValue={avatars} onChange={ (e) => {setAvatar(e.target.files[0])}} />
+                                <div className="text-sm text-gray-500 mt-4">
+                                    <label htmlFor="username">Upload Profile Pic:</label>
+                                    <input className='ml-2' type="file" name={formAvatars} defaultValue={formAvatars} onChange={ (e) => {setFormAvatar(e.target.files[0])}} />
+                                    </div>
+                                    <div className="text-sm text-gray-500 mt-5">
+                                        <label htmlFor="username">Enter your Username:</label>
+                                        <input 
+                                            className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                            style={{maxWidth:'500px', width:'100%'}} 
+                                            type="text"
+                                            name="username" 
+                                            placeholder="Please provide your username..." 
+                                            onChange={(event)=>{
+                                            var username = event.target.value;
+                                            setFormUsername(username)
+                                            }}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="text-sm text-gray-500 mt-5">
+                                        <label htmlFor="Email">Enter your Bio:</label>
+                                        <textarea 
+                                            className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none" 
+                                            style={{maxWidth:'500px', width:'100%'}} 
+                                            type="email"
+                                            name="username" 
+                                            placeholder="Please write something about yourself..." 
+                                            rows={5}
+                                            onChange={(event)=>{
+                                            var username = event.target.value;
+                                            setFormBio(username);
+                                            }}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="text-sm text-gray-500 mt-5">
+                                        <label htmlFor="Metamask_id">Your Metamask Address:</label>
+                                        <input 
+                                            className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                            style={{maxWidth:'500px', width:'100%', cursor:'not-allowed'}} 
+                                            type="text"
+                                            name="Metamask_id"
+                                            value={acc}
+                                            required
+                                            disabled
+                                        />
+                                    </div>
                                 </div>
-                                <div className="text-sm text-gray-500 mt-5">
-                                    <label htmlFor="username">Enter your Username:</label>
-                                    <input 
-                                        className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                                        style={{maxWidth:'500px', width:'100%'}} 
-                                        type="text"
-                                        name="username" 
-                                        placeholder="Please provide your username..." 
-                                        onChange={(event)=>{
-                                        var username = event.target.value;
-                                        setUsername(username)
-                                        }}
-                                        required
-                                    />
-                                </div>
-                                <div className="text-sm text-gray-500 mt-5">
-                                    <label htmlFor="Email">Enter your Bio:</label>
-                                    <textarea 
-                                        className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none" 
-                                        style={{maxWidth:'500px', width:'100%'}} 
-                                        type="email"
-                                        name="username" 
-                                        placeholder="Please write something about yourself..." 
-                                        rows={5}
-                                        onChange={(event)=>{
-                                        var email = event.target.value;
-                                        setBio(email);
-                                        }}
-                                        required
-                                    />
-                                </div>
-                                <div className="text-sm text-gray-500 mt-5">
-                                    <label htmlFor="Metamask_id">Your Metamask Address:</label>
-                                    <input 
-                                        className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                                        style={{maxWidth:'500px', width:'100%', cursor:'not-allowed'}} 
-                                        type="text"
-                                        name="Metamask_id"
-                                        value={acc}
-                                        required
-                                        disabled
-                                    />
-                                </div>
-                            </div>
                             </div>
                         </div>
                         </div>
@@ -173,7 +273,7 @@ function Profile() {
                             type="button"
                             className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-md"
                             onClick={ ()=>{
-                                createUser(username, bio)
+                                createUser(formUsername, formBio, formAvatars)
                             }}
                         >
                             Create
