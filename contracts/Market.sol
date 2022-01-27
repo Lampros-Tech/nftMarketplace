@@ -39,6 +39,7 @@ contract NFTMarket is ReentrancyGuard {
     uint indexed itemId,
     address indexed nftContract,
     uint256 indexed tokenId,
+    address creator,
     address seller,
     address owner,
     uint256 price,
@@ -93,6 +94,7 @@ contract NFTMarket is ReentrancyGuard {
       itemId,
       nftContract,
       tokenId,
+      msg.sender,
       msg.sender,
       address(0),
       price,
@@ -178,9 +180,9 @@ contract NFTMarket is ReentrancyGuard {
 
       tokenContract.transferToken(msg.sender, address(this), tokenId);
       
-      address payable oldOwner = idToMarketItem[itemId].owner;
+      address payable currentOwner = idToMarketItem[itemId].owner;
       idToMarketItem[itemId].owner = payable(address(0));
-      idToMarketItem[itemId].seller = oldOwner;
+      idToMarketItem[itemId].seller = currentOwner;
       idToMarketItem[itemId].price = newPrice;
       idToMarketItem[itemId].sold = false;
       _itemsSold.decrement();
@@ -195,14 +197,14 @@ contract NFTMarket is ReentrancyGuard {
     uint currentIndex = 0;
 
     for (uint i = 0; i < totalItemCount; i++) {
-      if (idToMarketItem[i + 1].seller == msg.sender) {
+      if (idToMarketItem[i + 1].creator == msg.sender) {
         itemCount += 1;
       }
     }
 
     MarketItem[] memory items = new MarketItem[](itemCount);
     for (uint i = 0; i < totalItemCount; i++) {
-      if (idToMarketItem[i + 1].seller == msg.sender) {
+      if (idToMarketItem[i + 1].creator == msg.sender) {
         uint currentId = i + 1;
         MarketItem storage currentItem = idToMarketItem[currentId];
         items[currentIndex] = currentItem;
