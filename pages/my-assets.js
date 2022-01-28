@@ -3,6 +3,7 @@ import { useEffect, useState, Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import axios from 'axios'
 import Web3Modal from "web3modal"
+import EtherIcon from '../public/Images/ether-icon'
 
 import {
   nftmarketaddress, nftaddress
@@ -101,17 +102,21 @@ export default function MyAssets() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 sample">
             {
               nfts.map((nft, i) => (
-                <div key={i} className="border shadow rounded-xl overflow-hidden dash-container">
-                  <div className="imageholder"><img src={nft.image} className='rounded flex justify-center' /></div>
-                  <div className="p-4">
-                    <p style={{ height: '45px', textOverflow:'ellipsis', whiteSpace:'nowrap', overflow:'hidden' }} className="text-2xl font-semibold">{nft.name}</p>
-                    <div style={{ height: '70px', overflow: 'hidden' }}>
-                      <p className="text-gray-400">{nft.description}</p>
+                <div key={i} className="border shadow rounded-xl mr-3 mb-3 overflow-hidden dash-container" >
+                  <div className="imageholder"><img src={nft.image} className='rounded' /></div>
+                  <div className="pt-1 pl-2 pr-2">
+                    <div className='flex pt-2 pl-2 pr-2'>
+                      <span style={{ height: '20px', textOverflow:'ellipsis', whiteSpace:'nowrap', overflow:'hidden', color:'#484848' }} className="flex-grow font-semibold">{nft.name}</span>
+                      <div className='grid text-right'>
+                        <span className='font-semibold' style={{color:'#484848'}}>
+                          price
+                        </span>
+                        <div style={{ width: '80px', textOverflow:'ellipsis', whiteSpace:'nowrap', overflow:'hidden', fontSize:'14px', fontWeight:'500', width:'80px', textOverflow:'ellipsis', color:'#484848'   }} className='inline'><EtherIcon style={{width:'20px',height:'0',paddingTop: '5px'}} />{nft.price} &nbsp; FTM</div>
+                      </div>
                     </div>
                   </div>
-                  <div className="p-4 bg-black">
-                    <p className="text-2xl font-bold text-white">Price - {nft.price} Eth</p>
-                    <button className="w-full text-white font-bold py-2 px-12 mt-4 rounded bs-btn" onClick={ () => { setOpen(true); window.sellTokenId = nft.tokenId; } }>Sell</button>
+                  <div className="p-2">
+                  <button className="w-full text-white font-bold py-2 px-12 rounded bs-btn" onClick={ () => { setOpen(true); window.sellTokenId = nft.tokenId; } }>Sell</button>
                   </div>
                 </div>
               ))

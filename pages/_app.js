@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import '../styles/appstyle.css'
+import '../styles/appstyle.scss'
 import Link from 'next/link'
 import "next/image"
 import React, { useState, useRef, useEffect } from 'react'
@@ -9,9 +9,7 @@ import HomeLogo from "../public/Images/HomeTest.js"
 import Add from "../public/Images/add.js"
 import Collection from "../public/Images/collection.js"
 import Transactions from "../public/Images/transactions.js"
-import Wallet from "../public/Images/wallet.js"
 import Menu from "../public/Images/menu.js"
-import Close from "../public/Images/close.js"
 import SearchIcon from "../public/Images/search.js"
 import AboutIcon from "../public/Images/about-icon.js"
 import ProfileIcon from "../public/Images/profile-icon.js"
@@ -46,7 +44,6 @@ function Marketplace({ Component, pageProps }) {
   useEffect(()=>{
     setSearch(searchState)
 
-    console.log(searchState)
   },[setSearch, searchState])
 
   async function onInit() {
@@ -84,7 +81,8 @@ function Marketplace({ Component, pageProps }) {
     <div>
       <nav className="navs">
         <div className="logo"> 
-          <img className='logos' src="/Images/155750.svg" width="40px" height="40px" /> 
+          {/* <img className='logos' src="/Images/155750.svg" width="40px" height="40px" />  */}
+          NFT
         </div>
         <div className='search'>
           <input type='text' className='searchtext' placeholder='search...' onKeyDown={ (e) => { if(e.key === 'Enter') {setRoute(e)} } } />
@@ -98,7 +96,7 @@ function Marketplace({ Component, pageProps }) {
           <Link href={ "/" + searchState }>
             <a className={"nav-btn"} style={ (router.pathname) === '/' ? activeStyle : {display:'flex', fill:'crimson' }  }>
               <div className='nav-btn-btn'>
-                Marketplace
+                Home
               </div>
               <div className='nav-small-btn w-4 h-4 ml-2'>
                 <HomeLogo className="route-icons" />
@@ -172,7 +170,7 @@ function Marketplace({ Component, pageProps }) {
                   <Link href="/create-item">
                     <a className="nav-btns" style={ (router.pathname) === '/create-item' ? activeStyle : {display:'flex', fill:'crimson' }  }>
                       <div className='nav-btn-btns'>
-                        Mint Token
+                        Create
                       </div>
                       <div className='nav-small-btn w-4 h-4 ml-2'>
                         <Add className="route-icons" />
@@ -192,7 +190,7 @@ function Marketplace({ Component, pageProps }) {
                   <Link href="/my-assets">
                     <a className="nav-btns" style={ (router.pathname) === '/my-assets' ? activeStyle : {display:'flex', fill:'crimson' }  }>
                       <div className='nav-btn-btns'>
-                        Collection
+                        My Assets
                       </div>
                       <div className='nav-small-btn w-4 h-4 ml-2'>
                         <Collection className="route-icons" />
